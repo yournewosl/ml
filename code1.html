@@ -1,0 +1,154 @@
+<!DOCTYPE html> 
+<html> 
+  
+<head> 
+    <title> 
+    Code
+    </title> 
+</head> 
+  
+<body>       
+    <div style="white-space: pre">
+        <p>
+            #Code 1
+            import pandas as pd
+            df = pd.read_csv("Heart.csv")
+            #Find Shape of Data
+            df.shape
+            #Find missing values
+            df.isnull().sum()
+            df.dtypes
+            df[df==0] # this will highlight where there is zero
+            #Count how many times has zero occur
+            df[df==0].count()
+            #find mean age of patients
+            df['Age'].mean()
+            newdf = df[['Age','Sex','cp','RestBP','Chol']]
+            #Radomly Divide Dataset into Training 75 , testing 25
+            #Cross - Validation
+            from sklearn.model_selection import train_test_split
+            train, test = train_test_split(df,random_state=0,test_size=0.25)
+            train.shape
+            #Creating Confusion Matrix
+            import numpy as np
+            # Creating Array
+            actual = list(np.ones(45))+list(np.zeros(55))
+            np.array(actual)
+            predicted = list(np.ones(40))+list(np.zeros(52))+list(np.ones(8))
+            np.array(predicted)
+            from sklearn.metrics import ConfusionMatrixDisplay
+            ConfusionMatrixDisplay.from_predictions(actual,predicted)
+            from sklearn.metrics import classification_report
+            print(classification_report(actual,predicted))
+            from sklearn.metrics import accuracy_score
+            accuracy_score(actual,predicted)
+
+            #Code 2
+            import pandas as pd
+            import matplotlib.pyplot as plt
+            import seaborn as sns
+            df =pd.read_csv('temperatures.csv')
+            df.head(5)
+            x = df['YEAR']
+            x
+            y = df['ANNUAL']
+            y
+            #plot
+            plt.title('Temperature Plot of India')
+            plt.xlabel('Year')
+            plt.ylabel('Annual Average Temperature')
+            plt.scatter(x,y)
+            plt.figure(figsize=(16,9))
+            x = x.values
+            x = x.reshape(117,1)
+            x.shape
+            from sklearn.linear_model import LinearRegression
+            regressor = LinearRegression()
+            regressor.fit(x,y)
+            regressor.coef_     #slope of equation
+            regressor.intercept_ #intercept at axis
+            regressor.predict([[2030]])
+            #Access Performance
+            predicted = regressor.predict(x)
+            print(predicted)
+            Mean Absolute Error 
+            import numpy as np
+            np.mean(abs(y-predicted))
+            print(x)
+            import numpy as np
+            np.mean(abs(y-predicted))
+            # or using prebuilt function
+            from sklearn.metrics import mean_absolute_error
+            mean_absolute_error(y,predicted)
+            Mean Squared Error
+            np.mean((y-predicted)**2)
+            from sklearn.metrics import mean_squared_error
+            mean_squared_error(y,predicted)
+            #R-2 Score
+            r2_score(y,predicted)
+            from sklearn.metrics import r2_score
+            regressor.score(x,y)
+            Visualizing Regression Model
+            plt.title('Temperature plot of India')
+            plt.ylabel('Annaul Average Temperature')
+            plt.scatter(x,y,label="actual",color='r')
+            plt.plot(x,predicted,label="predicted",color='g')  #Regression line or line of best fit
+            plt.legend()
+            plt.xlabel('Year')
+            # or using sns
+            sns.regplot(x='YEAR',y='ANNUAL',data=df)\
+
+            #Code 3
+            import pandas as pd
+            df = pd.read_csv('Admission_Predict.csv')
+            df.columns
+            df.shape
+            df.head(5)
+            from sklearn.preprocessing import Binarizer
+            bi = Binarizer(threshold=0.75)
+            df['Chance of Admit '] = bi.fit_transform(df[['Chance of Admit ']])
+            # it will divide it as 0 and 1 threshold consoderation
+            df.head()
+            x = df.drop('Chance of Admit ',axis=1)
+            y = df['Chance of Admit ']
+            y = y.astype('int') #Changing y datatype to int
+            #Graphically Shows Values of Y
+            import seaborn as sns
+            sns.countplot(x=y)
+            #Non Graphically shows values of Y
+            y.value_counts()
+            #Cross-Validation
+            from sklearn.model_selection import train_test_split
+            x_train, x_test, y_train, y_test = train_test_split(x,y,random_state=0,test_size=0.25)
+            x_train.shape
+            y_train.shape
+            from sklearn.tree import DecisionTreeClassifier
+            classifier = DecisionTreeClassifier(random_state=0)
+            #Training the Model
+            classifier.fit(x_train,y_train)
+            y_pred = classifier.predict(x_test) #Putting testing data into prediction
+            result = pd.DataFrame({
+                'actual':y_test,
+                'predicted':y_pred
+            })
+            print(result)
+            from sklearn.metrics import ConfusionMatrixDisplay , accuracy_score
+            from sklearn.metrics import classification_report
+            
+            ConfusionMatrixDisplay.from_predictions(y_test,y_pred)
+            accuracy_score(y_test,y_pred)
+            print(classification_report(y_test,y_pred))
+            #Test Predictions 
+            new = [[136,314,109,4,3.5,4.0,8.77,1]]
+            chance_of_admit = classifier.predict(new)[0]
+            from sklearn.tree import plot_tree
+            plot_tree(classifier,fontsize=8,filled=True,rounded=True)
+            import matplotlib.pyplot as plt
+            plt.figure(figsize=(12,12))
+            plot_tree(classifier,fontsize=8,filled=True,rounded=True,feature_names=x.columns,class_names=['NA','AD'])
+            import numpy as np
+        </p>
+    </div>
+</body> 
+  
+</html> 
