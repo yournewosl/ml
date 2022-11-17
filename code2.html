@@ -1,0 +1,81 @@
+<!DOCTYPE html> 
+<html> 
+  
+<head> 
+    <title> 
+    Code
+    </title> 
+</head> 
+  
+<body>       
+    <div style="white-space: pre">
+        <p>
+            #Code 5
+            ! pip install mlxtend
+            import pandas as pd
+            from mlxtend.preprocessing import TransactionEncoder
+            from mlxtend.frequent_patterns import apriori, association_rules
+            dataset = []
+            with open('Market_Basket_Optimisation.csv') as file:
+                reader = csv.reader(file,delimiter=',')
+                for row in reader:
+                    dataset += [row]
+            len(dataset)
+            #Transaction Encoder will create column of unique values
+            te = TransactionEncoder()
+            x = te.fit_transform(dataset) 
+            #Transaction Encoder will create column of unique values
+            x = te.fit_transform(dataset) 
+            te = TransactionEncoder()
+            x
+            len(te.columns_)
+            df = pd.DataFrame(x, columns=te.columns_)
+            df.head()
+            # 1. Find Frequent itemsets
+            freq_itemsets
+            # Find the rules
+            rules = association_rules(freq_itemsets,metric='confidence',min_threshold=0.25)
+            rules
+            rules = rules[['antecedents','consequents','support','confidence']]
+            rules.head()
+            #Recommendation
+            rules[rules['antecedents']=={'cake'}]['consequents']
+            freq_itemsets = apriori(df,min_support=0.01,use_colnames=True)  #10 % use hote
+            
+            #Code 6
+            ! pip install keras tensorflow -U
+            import numpy as np
+            df = np.loadtxt('https://raw.githubusercontent.com/jbrownlee/Datasets/master/pima-indians-diabetes.data.csv',delimiter=',')
+            df
+            df.shape
+            # Input data
+            x = df[:,:8]
+            # Output data
+            y = df[:,8]
+            x.shape
+            y
+            from collections import Counter
+            Counter(y)  # it will give no of values of zeroes and ones
+            from tensorflow.keras.models import Sequential
+            from tensorflow.keras.layers import Dense
+            # Create Model
+            model = Sequential()
+            # Input layer neurons
+            model.add(Dense(12,input_dim=8,activation='relu'))
+            # hidden layers
+            model.add(Dense(8,activation='relu'))
+            model.add(Dense(8,activation='relu'))
+            
+            # output layer
+            model.add(Dense(1,activation='sigmoid'))
+            #Compile the model
+            model.compile(loss='binary_crossentropy',optimizer='adam',metrics=['accuracy'])
+            # Train the model
+            model.fit(x,y,epochs = 100, batch_size=10)
+            model.evaluate(x,y)
+            model.summary()
+        </p>
+    </div>
+</body> 
+  
+</html> 
